@@ -1,6 +1,6 @@
 # Loop Driven Development
 
-*This repo collects our writing on loop driven development. This page makes the argument; three companion posts walk through real projects end to end — [building a corpus benchmark](ldd-in-practice.md), [grinding chart rendering against Excel](ldd-render-fidelity.md), and [performance work as a loop](ldd-perf.md) — and a more speculative follow-up asks [whether codebases are learnable](learnable-codebases.md).*
+*This repo collects our writing on loop driven development. This page makes the argument; three companion posts walk through real projects end to end — [building a corpus benchmark](ldd-in-practice.md), [grinding chart rendering against Excel](ldd-render-fidelity.md), and [performance work as a loop](ldd-perf.md) — and a closing post asks [whether codebases are learnable](learnable-codebases.md).*
 
 ## The oracle problem
 
