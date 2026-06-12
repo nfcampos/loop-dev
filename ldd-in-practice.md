@@ -1,6 +1,6 @@
 # Loop Driven Development, in practice
 
-*In [Loop Driven Development](README.md) we made an argument: when coding agents do the implementation, the engineering that matters moves to the feedback loop, and the human's job comes down to four decisions — which oracle to trust, which properties to pin, what shape the comparison takes, and when the agent is done. This post walks through one real project, decision by decision, with verbatim excerpts from the two Claude Code sessions where it happened. The result is public: [xlsx-corpus-bench](https://github.com/witanlabs/xlsx-corpus-bench) (Apache 2.0).*
+*In [Loop Driven Development](README.md) I made an argument: when coding agents do the implementation, the engineering that matters moves to the feedback loop, and the human's job comes down to four decisions — which oracle to trust, which properties to pin, what shape the comparison takes, and when the agent is done. This post walks through one real project, decision by decision, with verbatim excerpts from the two Claude Code sessions where it happened. The result is public: [xlsx-corpus-bench](https://github.com/witanlabs/xlsx-corpus-bench) (Apache 2.0).*
 
 Here's the first message of the session that built it:
 
@@ -8,15 +8,15 @@ Here's the first message of the session that built it:
 
 Notice the question isn't really about tests. It's about credible numbers. Anyone can publish a benchmark where their own product wins; the hard part is building one where the methodology holds up for readers who have every incentive to find the flaw. "In a way that people won't question it" ended up being the constraint behind most of the decisions below.
 
-One session later we had a benchmark that runs **15,970 real-world workbooks (6.8 million formula cells)** through five xlsx engines and compares every recalculated formula cell against what real Excel produces. The session ran for about 39 hours of wall clock (roughly 800 turns), most of it unattended. Two public corpora bracket the space: [FUSE](https://github.com/witanlabs/xlsx-corpus-bench/tree/main/corpus-fuse), 10,544 workbooks crawled from the open web — old, hostile, every producer imaginable — and SpreadsheetBench, 5,426 modern, formula-heavy workbooks from real Excel forum questions. Every number has an external denominator and a binary, automated pass/fail.
+One session later I had a benchmark that runs **15,970 real-world workbooks (6.8 million formula cells)** through five xlsx engines and compares every recalculated formula cell against what real Excel produces. The session ran for about 39 hours of wall clock (roughly 800 turns), most of it unattended. Two public corpora bracket the space: [FUSE](https://github.com/witanlabs/xlsx-corpus-bench/tree/main/corpus-fuse), 10,544 workbooks crawled from the open web — old, hostile, every producer imaginable — and SpreadsheetBench, 5,426 modern, formula-heavy workbooks from real Excel forum questions. Every number has an external denominator and a binary, automated pass/fail.
 
-The agent built all of it: the corpus plumbing, the Excel automation, the comparators, the reports, the charts. What we contributed is the four decisions. Let's go through them one at a time.
+The agent built all of it: the corpus plumbing, the Excel automation, the comparators, the reports, the charts. What I contributed is the four decisions. Let's go through them one at a time.
 
 ## Decision 1: which oracle
 
 The first version of the bench measured recalculation the obvious way: open each workbook, recalculate, and compare against the values already cached inside the file. Spreadsheet files store the last computed value of every formula, so this looks like free ground truth — millions of expected values, no extra work.
 
-We dropped it as soon as we noticed:
+I dropped it as soon as I noticed:
 
 > definition for recalculation is compared to what was in the file, or to what excel would produce, only the 2nd is valuable i think? as we dont know where the file came from, for all i know it was last edited by libreoffice or something
 
@@ -26,7 +26,7 @@ So the harness asks Excel itself, fresh, for every file. [`harness/excel_truth.p
 
 ## Decision 2: which properties to pin
 
-The bench pins three behaviors per library, and the [README defines each in a sentence](https://github.com/witanlabs/xlsx-corpus-bench#what-is-measured): does the file *open*, does it *survive open→save→reopen* (where the written output also has to pass a library-neutral structural validation — readable zip, well-formed XML, all relationship targets resolve), and does *recalculation match Excel*. Just as deliberate is what we didn't pin: speed, memory, API design. Excel has no answer for those, so the bench makes no claim about them.
+The bench pins three behaviors per library, and the [README defines each in a sentence](https://github.com/witanlabs/xlsx-corpus-bench#what-is-measured): does the file *open*, does it *survive open→save→reopen* (where the written output also has to pass a library-neutral structural validation — readable zip, well-formed XML, all relationship targets resolve), and does *recalculation match Excel*. Just as deliberate is what I didn't pin: speed, memory, API design. Excel has no answer for those, so the bench makes no claim about them.
 
 Inside those three metrics is where the human time actually went, on judgment calls that all followed the same rule: when in doubt, make the choice you'd be comfortable defending. Two examples from the transcript.
 
@@ -73,7 +73,7 @@ Aggregation gets reported two ways, because they answer different questions. *Pe
 
 ## Decision 4: when the agent is done
 
-We never asked the agent to decide when it was finished. Done-ness lived in files: the bench writes its failures into checked-in reports — `WITAN-FAILURES.md`, `WITAN-RECALC-GAPS.md` — that are enumerated and prioritized. The second session, this time in the engine repo, opened by handing the agent one of them:
+I never asked the agent to decide when it was finished. Done-ness lived in files: the bench writes its failures into checked-in reports — `WITAN-FAILURES.md`, `WITAN-RECALC-GAPS.md` — that are enumerated and prioritized. The second session, this time in the engine repo, opened by handing the agent one of them:
 
 > in a new worktree, investigate these failures ~/dev/xlsx-corpus-bench/results-fuse/WITAN-FAILURES.md report back on your findings, ideally we want to handle all of these as gracefully as possible, if need be use excel oracle
 
@@ -89,7 +89,7 @@ This habit is worth copying. An agent in this loop is investigator and implement
 
 ## Closing the loop
 
-Everything above is the first half of LDD: producing the signal. The second session — a long one in the engine repo, working through the failure reports — is what the signal is for. It didn't go the way we expected, and the way it actually went is more instructive.
+Everything above is the first half of LDD: producing the signal. The second session — a long one in the engine repo, working through the failure reports — is what the signal is for. It didn't go the way I expected, and the way it actually went is more instructive.
 
 The load failures were the straightforward part. The agent worked through the checked-in report, fixed everything (it had already caught a false positive in the harness on its way in: "the harness bug is being fixed by someone else, thanks for the catch"), and the published tables now show 100.0% of both corpora opening and surviving round-trip.
 
@@ -103,7 +103,7 @@ Where things stand, from the [published tables](https://github.com/witanlabs/xls
 
 ## The recipe
 
-Strip away the spreadsheet specifics and what's left is a template we expect to reuse:
+Strip away the spreadsheet specifics and what's left is a template I expect to reuse:
 
 1. **A public corpus as the denominator.** Behaviors sampled from the wild, not authored by the team being measured.
 2. **The real application as oracle, scripted.** Frozen truth generated once, compared against forever.
@@ -111,6 +111,6 @@ Strip away the spreadsheet specifics and what's left is a template we expect to 
 4. **Failure reports as the agent's work queue.** Done is enumerated gaps going to zero, re-verified by the same loop that found them.
 5. **Everything pinned.** Corpus, truth snapshots, comparator — even [a frozen engine binary](https://github.com/witanlabs/xlsx-corpus-bench/tree/main/engine-frozen), pinned by commit, so any published number reproduces offline.
 
-The total cost was two long agent sessions, most of them unattended. In the LDD post we argued that when oracle queries become approximately free, the equilibrium number of oracle-derived tests shifts dramatically. This is what that looks like in practice: 6.8 million assertions against real Excel, fix sessions whose work arrives pre-enumerated and pre-prioritized, and a loop that will judge every future engine change the same way it judged the last ones.
+The total cost was two long agent sessions, most of them unattended. In the LDD post I argued that when oracle queries become approximately free, the equilibrium number of oracle-derived tests shifts dramatically. This is what that looks like in practice: 6.8 million assertions against real Excel, fix sessions whose work arrives pre-enumerated and pre-prioritized, and a loop that will judge every future engine change the same way it judged the last ones.
 
 One last detail: the result charts in the README are [authored and rendered by witan itself](https://github.com/witanlabs/xlsx-corpus-bench/blob/main/harness/make_charts.py). The engine under test draws its own report card — which is fine, because the loop is what established the report card is honest.

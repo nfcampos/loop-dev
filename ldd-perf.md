@@ -28,7 +28,7 @@ And one rule sat above all of it: anything that would change output bytes needs 
 
 The perf harness is a small console tool that runs each operation against a fixture matrix and records duration and allocations per op, with peak memory measured outside the process. Three design choices in it earn their keep:
 
-**Fixtures are tagged by profile.** Each fixture declares what it stresses: a small baseline workbook; a formula-heavy financial model; a dependency-heavy workbook; the 12.4M-cell LFB file tagged `stress, values, save`; a 54MB Monte Carlo simulator tagged `stress, formulas, lint`. Performance work is profile-specific — a value-heavy file and a formula-heavy file have different bottlenecks — so the matrix is the perf equivalent of behavior coverage: every profile we care about has a fixture that represents it.
+**Fixtures are tagged by profile.** Each fixture declares what it stresses: a small baseline workbook; a formula-heavy financial model; a dependency-heavy workbook; the 12.4M-cell LFB file tagged `stress, values, save`; a 54MB Monte Carlo simulator tagged `stress, formulas, lint`. Performance work is profile-specific — a value-heavy file and a formula-heavy file have different bottlenecks — so the matrix is the perf equivalent of behavior coverage: every profile that matters has a fixture that represents it.
 
 **Baselines merge by slice.** A focused run refreshes only its own (fixture, operation) entries in the baseline file, so you can iterate on one op without invalidating the rest, and noisy entries get flagged rather than trusted.
 

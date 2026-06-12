@@ -2,17 +2,17 @@
 
 *Second in a series of practical examples of [Loop Driven Development](README.md) (the first covered [building a corpus benchmark](ldd-in-practice.md)). This one is about a domain where equality assertions don't exist: making headlessly-rendered charts look like Excel. The work lives in our engine repo, so unlike the corpus bench there's nothing to link — but the mechanics, the numbers, and the pictures are all below.*
 
-Our engine renders charts to pixels without Office installed: it reads the chart's OOXML, lays out axes and series and legends, and draws the result. The correctness question is "does this look like what Excel would draw?" — and that question resists the kind of per-behavior equality assertions we used for formula evaluation. There is no cell you can compare. A bar chart is a few hundred thousand pixels, and Excel's exact output depends on layout decisions, color theming, font rasterization, and a long tail of defaults that the spec describes only loosely.
+Our engine renders charts to pixels without Office installed: it reads the chart's OOXML, lays out axes and series and legends, and draws the result. The correctness question is "does this look like what Excel would draw?" — and that question resists the kind of per-behavior equality assertions the corpus bench used for formula evaluation. There is no cell you can compare. A bar chart is a few hundred thousand pixels, and Excel's exact output depends on layout decisions, color theming, font rasterization, and a long tail of defaults that the spec describes only loosely.
 
-In the LDD post we called this the distance-assertion case: when clean equality isn't available, assert a distance against the oracle's output and drive it down. This post is what that looks like in production — the oracle setup, the grading function, the gate that protects progress, and what one focused week of grinding against it achieved.
+In the LDD post I called this the distance-assertion case: when clean equality isn't available, assert a distance against the oracle's output and drive it down. This post is what that looks like in production — the oracle setup, the grading function, the gate that protects progress, and what one focused week of grinding against it achieved.
 
 ## The oracle, used twice
 
 The first thing worth copying from this setup is that Excel is the oracle on *both ends* of the pipeline.
 
-On the input end, the test fixtures themselves are authored by Excel. Early fixture workbooks were built with openpyxl, which meant we were testing our renderer against files that approximated what Excel writes. That got replaced wholesale: a small tool (`excel-vba-run`) executes a VBA script inside real Excel on macOS, so each chart family — pie, bar, area, axis, legend, trendline, and so on, 21 families — has a `.bas` script that drives Excel to create its fixture workbook. The files we test against are files Excel wrote.
+On the input end, the test fixtures themselves are authored by Excel. Early fixture workbooks were built with openpyxl, which meant the renderer was being tested against files that approximated what Excel writes. That got replaced wholesale: a small tool (`excel-vba-run`) executes a VBA script inside real Excel on macOS, so each chart family — pie, bar, area, axis, legend, trendline, and so on, 21 families — has a `.bas` script that drives Excel to create its fixture workbook. The fixtures are files Excel wrote.
 
-Each family also has a design doc that derives the fixture matrix from the spec: `fixtures-pie.md`, for example, maps the 24 attributes of the pie-chart OOXML types to concrete fixture cases. So coverage isn't "charts we happened to think of"; it's the spec's attribute space, instantiated by Excel.
+Each family also has a design doc that derives the fixture matrix from the spec: `fixtures-pie.md`, for example, maps the 24 attributes of the pie-chart OOXML types to concrete fixture cases. So coverage isn't "charts somebody happened to think of"; it's the spec's attribute space, instantiated by Excel.
 
 On the output end, the ground truth is a screenshot of Excel rendering each fixture. A capture script drives Excel via AppleScript, uses Excel's "copy picture" command on the chart range, reads the PNG off the clipboard, and writes it to the repo as `<fixture>.excel.png`. Those PNGs are committed. This matters for the same reason the frozen snapshots mattered in the corpus bench: Excel is only needed when *refreshing* the oracle. CI compares against the committed PNGs and never opens Excel.
 
@@ -57,7 +57,7 @@ The most visible single win was legacy chart styles. Excel's built-in style 44 r
 
 ![Excel rendering of chart style 44: dark plot area, orange gradient bars](images/style_legacy_id44.excel.png)
 
-*What we drew before — default theming, render gap 63.6:*
+*What our renderer drew before — default theming, render gap 63.6:*
 
 ![Our render before: default white background and colors](images/style_legacy_id44.before.png)
 
