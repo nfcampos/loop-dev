@@ -12,6 +12,8 @@ One session later I had a benchmark that runs **15,970 real-world workbooks (6.8
 
 The agent built all of it: the corpus plumbing, the Excel automation, the comparators, the reports, the charts. What I contributed is the four decisions. Let's go through them one at a time.
 
+![The corpus-bench loop: a public corpus feeds real Excel once to produce frozen ground truth; then, every run after, five engines process the same files, one shared comparator judges them against the frozen truth, reports and per-file receipts become the work queue, the agent fixes the engine, and the bench re-runs until the gaps reach zero](images/corpus-bench-loop.png)
+
 ## Decision 1: which oracle
 
 The first version of the bench measured recalculation the obvious way: open each workbook, recalculate, and compare against the values already cached inside the file. Spreadsheet files store the last computed value of every formula, so this looks like free ground truth — millions of expected values, no extra work.
