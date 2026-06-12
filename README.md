@@ -30,6 +30,8 @@ Agents improve by looping against feedback. As [Lance Martin puts it](https://x.
 
 ![Feedback sources plotted by independence and queryability: in-thread self-review is queryable but has zero independence; standards text is independent but static, with mined test suites above it; off-thread review reaches the independent-and-queryable quadrant but well below the live oracle, which alone sits at the top-right corner — the holy grail](images/feedback-2x2.png)
 
+The bottom-left quadrant is empty for a reason: feedback that is both self-graded and static — re-reading your own plan or notes — is feedback in name only. The signal is neither new (it came from the same context being evaluated) nor able to answer a question the artifact didn't already anticipate.
+
 Ranked, worst to best:
 
 1. **In-thread review.** The context that wrote the code grades it. Queryable — you can ask it anything — but with zero independence: [agents asked to evaluate their own work "tend to respond by confidently praising the work — even when the quality is obviously mediocre"](https://www.anthropic.com/engineering/harness-design-long-running-apps). The answers come from the thing being evaluated.
