@@ -1,0 +1,33 @@
+<svg width="1280" height="900" viewBox="0 0 1280 900" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="900" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="710" y="54" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="bold" fill="#1d1d1f" text-anchor="middle">Feedback sources</text>
+
+  <!-- Column pole labels (Queryability axis) -->
+  <text x="440" y="102" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle">Static</text>
+  <text x="980" y="102" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle">Queryable on demand</text>
+
+  <!-- Row pole labels (Independence axis) -->
+  <text x="150" y="300" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle" transform="rotate(-90 150 300)">Independent</text>
+  <text x="150" y="680" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle" transform="rotate(-90 150 680)">Self-graded</text>
+
+  <!-- Top-left: Independent + Static -->
+  <rect x="180" y="120" width="520" height="360" rx="18" fill="#f5f5f7"/>
+  <text x="440" y="284" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">Standards / RFC text</text>
+  <text x="440" y="332" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">Mined test suites</text>
+
+  <!-- Top-right: Independent + Queryable (holy grail) -->
+  <rect x="720" y="120" width="520" height="360" rx="18" fill="#e9f6ef" stroke="#1a7f4e" stroke-width="3"/>
+  <text x="980" y="266" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">Off-thread review</text>
+  <text x="980" y="324" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="bold" fill="#136b41" text-anchor="middle">Live oracle</text>
+  <text x="980" y="362" font-family="Helvetica, Arial, sans-serif" font-size="22" font-style="italic" fill="#4d8a6c" text-anchor="middle">(the holy grail)</text>
+
+  <!-- Bottom-left: Self-graded + Static -->
+  <rect x="180" y="500" width="520" height="360" rx="18" fill="#f5f5f7"/>
+  <text x="440" y="690" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">Re-reading your own plan / notes</text>
+
+  <!-- Bottom-right: Self-graded + Queryable -->
+  <rect x="720" y="500" width="520" height="360" rx="18" fill="#f5f5f7"/>
+  <text x="980" y="690" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">In-thread self-review</text>
+</svg>
