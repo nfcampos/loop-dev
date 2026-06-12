@@ -25,6 +25,11 @@ Agents improve by looping against feedback. As [Lance Martin puts it](https://x.
 
 ![Feedback sources arranged by independence and queryability: self-graded and static is re-reading your own notes; self-graded and queryable is in-thread self-review; independent and static is standards text and mined test suites; independent and queryable is off-thread review and the live oracle — the holy grail](feedback-2x2.png)
 
+|  | Static | Queryable on demand |
+| :---- | :---- | :---- |
+| **Self-graded** | re-reading your own plan/notes | in-thread self-review |
+| **Independent** | standards/RFC text; mined test suites | off-thread review; **live oracle** |
+
 Ranked, worst to best:
 
 1. **In-thread review.** The context that wrote the code grades it. Queryable — you can ask it anything — but with zero independence: [agents asked to evaluate their own work "tend to respond by confidently praising the work — even when the quality is obviously mediocre"](https://www.anthropic.com/engineering/harness-design-long-running-apps). The answers come from the thing being evaluated.
