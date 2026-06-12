@@ -117,3 +117,19 @@ Every component predates 2026.
 - **Test oracle problem** (Barr et al. 2015): LDD is "derived oracle" in their taxonomy. Inheriting the framing.
 
 The parts are old and the loop is cheap; what's left to engineer is the feedback — and once you see code this way, it's hard not to ask whether writing software is really so different from training a model.
+
+## Resources
+
+Open-source artifacts from this series:
+
+- [xlsx-corpus-bench](https://github.com/witanlabs/xlsx-corpus-bench) — the benchmark from [the corpus post](ldd-in-practice.md): 15,970 real-world workbooks, real Excel as the recalculation oracle, per-file receipts
+- [editable-handbooks](https://github.com/nfcampos/editable-handbooks) — the agent-editable memory format from [the closing post](learnable-codebases.md)
+- [research-log](https://github.com/witanlabs/research-log) — four months of building an LLM spreadsheet agent; the earlier work referenced in the closing post
+
+Other open-source resources mentioned along the way:
+
+- [numfmt's test suite](https://github.com/borgar/numfmt/tree/master/test) and the [CommonMark spec's JSON cases](https://github.com/commonmark/commonmark-spec) — examples of minable suites (technique A)
+- [test262](https://github.com/tc39/test262) and [SQLLogicTest as used by DuckDB](https://duckdb.org/docs/stable/dev/sqllogictest/intro) — conformance suites as oracles
+- [Playwright's screenshot assertions](https://playwright.dev/docs/test-snapshots) — mainstream distance-assertion tooling
+- [Codex's `/goal` continuation template](https://github.com/openai/codex/blob/6014b6679ffbd92eeddffa3ad7b4402be6a7fefe/codex-rs/core/templates/goals/continuation.md) — one spelling of the done-criteria pattern
+- [DSPy](https://github.com/stanfordnlp/dspy) — programmatic prompt optimization, for the coda's comparison of fitted artifacts
