@@ -26,10 +26,6 @@
   <text x="290" y="930" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle">Static</text>
   <text x="1090" y="930" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle">Queryable on demand</text>
 
-  <!-- Re-reading your own plan / notes: barely queryable, barely independent -->
-  <circle cx="273" cy="789" r="11" fill="#1d1d1f"/>
-  <text x="299" y="798" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#1d1d1f" text-anchor="start">Re-reading your own plan / notes</text>
-
   <!-- In-thread self-review: fully queryable, zero independence -->
   <circle cx="1053" cy="819" r="11" fill="#1d1d1f"/>
   <text x="1053" y="783" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#1d1d1f" text-anchor="middle">In-thread self-review</text>

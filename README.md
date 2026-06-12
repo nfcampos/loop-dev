@@ -28,7 +28,7 @@ Agents improve by looping against feedback. As [Lance Martin puts it](https://x.
 - **Independence.** Does the feedback share provenance with the work, or does it come from somewhere the work can't reach? An agent grading its own output is student and examiner at once.
 - **Queryability.** Can you get an answer for a *new, specific input* on demand — or is the feedback a fixed artifact you can only read?
 
-![Feedback sources plotted by independence and queryability: re-reading your own notes sits near the origin; in-thread self-review is queryable but has zero independence; standards text is independent but static, with mined test suites above it; off-thread review reaches the independent-and-queryable quadrant but well below the live oracle, which alone sits at the top-right corner — the holy grail](images/feedback-2x2.png)
+![Feedback sources plotted by independence and queryability: in-thread self-review is queryable but has zero independence; standards text is independent but static, with mined test suites above it; off-thread review reaches the independent-and-queryable quadrant but well below the live oracle, which alone sits at the top-right corner — the holy grail](images/feedback-2x2.png)
 
 Ranked, worst to best:
 
