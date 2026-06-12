@@ -84,13 +84,13 @@ Script the live reference. Capture inputs, ask the oracle, freeze the answers in
 
 ## What's actually new in the agent era
 
-Three things genuinely shift when both producer *and* consumer of the tests are coding agents:
+Three things shift when both producer *and* consumer of the tests are coding agents:
 
 1. **Cost-benefit inverts.** For a human, querying a real reference for 50 edge cases is half a day of grunt work, so humans skip it; the suite stays anemic; bugs surface in production. For an agent, 50 oracle queries is 90 seconds. **The marginal oracle is approximately free.** This is the actual unlock — not a faster version of the same loop, but a fundamental shift in the equilibrium of how many oracle-derived tests projects converge on.
 
 2. **Oracle, test, and impl in one workflow.** Pre-agent, the workflow had multiple stages: consult the oracle, internalize the answer, later write a test from your mental model, later write the impl. Each handoff lost fidelity — the test ended up reflecting the developer's recollection, not the oracle itself. With agents, all of this collapses to one session: query, freeze the answer as a test, write impl. The test is the oracle's answer, not a recollection.
 
-3. **Mining goes polyglot.** Cross-language test mining used to require a human bilingual in both source and target stacks, so it almost never happened. Agents do it casually: tests stop being "in your stack" and start being behavioral specifications that happen to be written in some stack.
+3. **OSS Mining goes polyglot.** Cross-language test mining used to require a human bilingual in both source and target stacks, so it almost never happened. Agents do it casually: tests stop being "in your stack" and start being behavioral specifications that happen to be written in some stack.
 
 ## Where human creativity moves
 
