@@ -1,6 +1,11 @@
 # Loop Driven Development
 
-*This repo collects my writing on loop driven development. This page makes the argument; three companion posts walk through real projects end to end — [building a corpus benchmark](ldd-in-practice.md), [grinding chart rendering against Excel](ldd-render-fidelity.md), and [performance work as a loop](ldd-perf.md) — and a closing post asks [whether codebases are learnable](learnable-codebases.md).*
+*This repo is a series of posts on how I've been using coding agents lately (June 2026). This page summarises my main thoughts, then several examples of this in practice, and a coda:*
+
+1. *[Loop Driven Development, in practice](01-ldd-in-practice.md) — building a corpus benchmark, decision by decision*
+2. *[Grinding chart rendering against Excel](02-ldd-render-fidelity.md) — a domain with no equality assertions*
+3. *[Performance work as a loop](03-ldd-perf.md) — same bytes, faster, with the oracle in an unusual place*
+4. *[Are codebases learnable?](04-learnable-codebases.md) — the closing post: is writing software so different from training a model?*
 
 ## The oracle problem
 
@@ -23,12 +28,7 @@ Agents improve by looping against feedback. As [Lance Martin puts it](https://x.
 - **Independence.** Does the feedback share provenance with the work, or does it come from somewhere the work can't reach? An agent grading its own output is student and examiner at once.
 - **Queryability.** Can you get an answer for a *new, specific input* on demand — or is the feedback a fixed artifact you can only read?
 
-![Feedback sources arranged by independence and queryability: self-graded and static is re-reading your own notes; self-graded and queryable is in-thread self-review; independent and static is standards text and mined test suites; independent and queryable is off-thread review and the live oracle — the holy grail](images/feedback-2x2.png)
-
-|  | Static | Queryable on demand |
-| :---- | :---- | :---- |
-| **Self-graded** | re-reading your own plan/notes | in-thread self-review |
-| **Independent** | standards/RFC text; mined test suites | off-thread review; **live oracle** |
+![Feedback sources plotted by independence and queryability: re-reading your own notes sits near the origin; in-thread self-review is queryable but has zero independence; standards text is independent but static, with mined test suites above it; off-thread review reaches the independent-and-queryable quadrant but well below the live oracle, which alone sits at the top-right corner — the holy grail](images/feedback-2x2.png)
 
 Ranked, worst to best:
 
@@ -78,7 +78,7 @@ Script the live reference. Capture inputs, ask the oracle, freeze the answers in
 
 **The operational artifact is a re-runnable recipe checked in alongside the snapshot.** The script does the live oracle query; the snapshot captures the result; CI asserts against the snapshot. When you need different output, suspect drift, or behavior changes — modify the script and re-run. The snapshot regenerates. The recipe is the provenance, the script is the version pin, the snapshot is the captured output. Nothing else is needed.
 
-**Distance assertions can stand in for equality assertions.** Instead of pinning each behavior by equality (`SUM("42", TRUE) == 43`), assert a distance over the whole output (`pixel_diff(impl, oracle) < 1%`; [Playwright's `toHaveScreenshot({ maxDiffPixelRatio })`](https://playwright.dev/docs/test-snapshots) is a mainstream instance; relative error for floats and edit distance for strings work the same way). Distance is cheaper to set up — one assertion covers the whole output, with no upfront enumeration of which details matter — and it works where clean equality isn't available (anti-aliasing, floating-point accumulation, natural-language outputs). The cost is actionability: a failing diff doesn't say which detail is wrong or what to fix next, and domain invariants stay implicit. Either way the agent gets an aggregate hill-climb signal: % green across an equality suite, or % differing pixels driven down across iterations. (The [chart rendering post](ldd-render-fidelity.md) is a full worked example of this, including a gate design that stops the metric going slack.)
+**Distance assertions can stand in for equality assertions.** Instead of pinning each behavior by equality (`SUM("42", TRUE) == 43`), assert a distance over the whole output (`pixel_diff(impl, oracle) < 1%`; [Playwright's `toHaveScreenshot({ maxDiffPixelRatio })`](https://playwright.dev/docs/test-snapshots) is a mainstream instance; relative error for floats and edit distance for strings work the same way). Distance is cheaper to set up — one assertion covers the whole output, with no upfront enumeration of which details matter — and it works where clean equality isn't available (anti-aliasing, floating-point accumulation, natural-language outputs). The cost is actionability: a failing diff doesn't say which detail is wrong or what to fix next, and domain invariants stay implicit. Either way the agent gets an aggregate hill-climb signal: % green across an equality suite, or % differing pixels driven down across iterations. (The [chart rendering post](02-ldd-render-fidelity.md) is a full worked example of this, including a gate design that stops the metric going slack.)
 
 **A typical setup:** a snapshot generator takes a list of cases, invokes the oracle programmatically, captures the output keyed by a per-case fingerprint, and writes JSON. The oracle is *never* invoked by the test runner — the CI lane and the developer/refresh lane are decoupled by the snapshot file. The generator supports targeted refresh (`--case`) and full rebuilds (`--refresh-all`). When behavior questions arise, modify the script's case definitions and re-run. *(For an Excel-compatible calc engine, this looks like: formula cases across math/trig, statistical, lookup, text, lambda, date categories; xlwings invokes Excel; results captured per-fingerprint to JSON.)*
 
@@ -104,7 +104,7 @@ LDD does not remove the human developer; it moves the work up a level. The creat
 
 4. **When the agent is done.** Not "all tests pass" — that's trivially true of an empty suite. Done is: every behavior dimension you named has cases, the case list covers the feature's input space, the oracle recipe is checked in, the snapshot is reproducible from it, CI asserts without the live oracle, and new behavior cannot land without either matching the oracle or deliberately updating it. Looping coding agents overshoot or stop short unless this is written down somewhere they re-check each turn — Codex's [`/goal` continuation template](https://github.com/openai/codex/blob/6014b6679ffbd92eeddffa3ad7b4402be6a7fefe/codex-rs/core/templates/goals/continuation.md) is one concrete spelling; [`/goal` in Claude Code and Outcomes in Claude Managed Agents](https://x.com/rlancemartin/status/2064397389189071163) are others — Outcomes spawns an independent grader sub-agent that must confirm the rubric is met before the agent may stop, keeping the done-check off-thread.
 
-That is still creative engineering — just creativity over the training environment rather than over each line of implementation. The companion posts in this repo show these four decisions being made on real projects, with the transcript excerpts where each happened: [the corpus benchmark](ldd-in-practice.md) walks through all four, [the chart rendering work](ldd-render-fidelity.md) is a deep dive on the comparison-shape decision, and [the performance campaign](ldd-perf.md) is all four again with the oracle in an unusual place — the current implementation itself.
+That is still creative engineering — just creativity over the training environment rather than over each line of implementation. The companion posts in this repo show these four decisions being made on real projects, with the transcript excerpts where each happened: [the corpus benchmark](01-ldd-in-practice.md) walks through all four, [the chart rendering work](02-ldd-render-fidelity.md) is a deep dive on the comparison-shape decision, and [the performance campaign](03-ldd-perf.md) is all four again with the oracle in an unusual place — the current implementation itself.
 
 ## Prior art
 
@@ -122,8 +122,8 @@ The parts are old and the loop is cheap; what's left to engineer is the feedback
 
 Open-source artifacts from this series:
 
-- [xlsx-corpus-bench](https://github.com/witanlabs/xlsx-corpus-bench) — the benchmark from [the corpus post](ldd-in-practice.md): 15,970 real-world workbooks, real Excel as the recalculation oracle, per-file receipts
-- [editable-handbooks](https://github.com/nfcampos/editable-handbooks) — the agent-editable memory format from [the closing post](learnable-codebases.md)
+- [xlsx-corpus-bench](https://github.com/witanlabs/xlsx-corpus-bench) — the benchmark from [the corpus post](01-ldd-in-practice.md): 15,970 real-world workbooks, real Excel as the recalculation oracle, per-file receipts
+- [editable-handbooks](https://github.com/nfcampos/editable-handbooks) — the agent-editable memory format from [the closing post](04-learnable-codebases.md)
 - [research-log](https://github.com/witanlabs/research-log) — four months of building an LLM spreadsheet agent; the earlier work referenced in the closing post
 
 Other open-source resources mentioned along the way:

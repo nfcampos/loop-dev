@@ -1,6 +1,6 @@
 # Grinding chart rendering against Excel
 
-*Second in a series of practical examples of [Loop Driven Development](README.md) (the first covered [building a corpus benchmark](ldd-in-practice.md)). This one is about a domain where equality assertions don't exist: making headlessly-rendered charts look like Excel. The work lives in our engine repo, so unlike the corpus bench there's nothing to link — but the mechanics, the numbers, and the pictures are all below.*
+*Second in a series of practical examples of [Loop Driven Development](README.md) (the first covered [building a corpus benchmark](01-ldd-in-practice.md)). This one is about a domain where equality assertions don't exist: making headlessly-rendered charts look like Excel. The work lives in our engine repo, so unlike the corpus bench there's nothing to link — but the mechanics, the numbers, and the pictures are all below.*
 
 Our engine renders charts to pixels without Office installed: it reads the chart's OOXML, lays out axes and series and legends, and draws the result. The correctness question is "does this look like what Excel would draw?" — and that question resists the kind of per-behavior equality assertions the corpus bench used for formula evaluation. There is no cell you can compare. A bar chart is a few hundred thousand pixels, and Excel's exact output depends on layout decisions, color theming, font rasterization, and a long tail of defaults that the spec describes only loosely.
 

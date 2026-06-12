@@ -1,6 +1,6 @@
 # Performance work as a loop: same bytes, faster
 
-*Third in a series of practical examples of [Loop Driven Development](README.md) (the others: [building a corpus benchmark](ldd-in-practice.md) and [grinding chart rendering against Excel](ldd-render-fidelity.md)). This one is about a performance campaign, which turns out to be LDD with the oracle in an unusual place. Excerpts are verbatim from the Claude Code session and commit messages.*
+*Third in a series of practical examples of [Loop Driven Development](README.md) (the others: [building a corpus benchmark](01-ldd-in-practice.md) and [grinding chart rendering against Excel](02-ldd-render-fidelity.md)). This one is about a performance campaign, which turns out to be LDD with the oracle in an unusual place. Excerpts are verbatim from the Claude Code session and commit messages.*
 
 A 68MB spreadsheet — 12.4 million cells of London Fire Brigade incident data — took our production xlsx service down with an out-of-memory error. The session that followed opened like this:
 

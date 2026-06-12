@@ -1,33 +1,53 @@
-<svg width="1280" height="900" viewBox="0 0 1280 900" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1280" height="900" fill="#ffffff"/>
+<svg width="1280" height="980" viewBox="0 0 1280 980" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="980" fill="#ffffff"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="#6e6e73"/>
+    </marker>
+  </defs>
 
   <!-- Title -->
-  <text x="710" y="54" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="bold" fill="#1d1d1f" text-anchor="middle">Feedback sources</text>
+  <text x="720" y="54" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="bold" fill="#1d1d1f" text-anchor="middle">Feedback sources</text>
 
-  <!-- Column pole labels (Queryability axis) -->
-  <text x="440" y="102" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle">Static</text>
-  <text x="980" y="102" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle">Queryable on demand</text>
+  <!-- Quadrant backgrounds -->
+  <rect x="200" y="120" width="516" height="376" rx="10" fill="#f5f5f7"/>
+  <rect x="200" y="504" width="516" height="376" rx="10" fill="#f5f5f7"/>
+  <rect x="724" y="504" width="516" height="376" rx="10" fill="#f5f5f7"/>
+  <rect x="724" y="120" width="516" height="376" rx="10" fill="#e9f6ef" stroke="#1a7f4e" stroke-width="3"/>
 
-  <!-- Row pole labels (Independence axis) -->
-  <text x="150" y="300" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle" transform="rotate(-90 150 300)">Independent</text>
-  <text x="150" y="680" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle" transform="rotate(-90 150 680)">Self-graded</text>
+  <!-- Y axis: Independence -->
+  <line x1="150" y1="660" x2="150" y2="340" stroke="#6e6e73" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="150" y="240" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle" transform="rotate(-90 150 240)">Independent</text>
+  <text x="150" y="760" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle" transform="rotate(-90 150 760)">Self-graded</text>
 
-  <!-- Top-left: Independent + Static -->
-  <rect x="180" y="120" width="520" height="360" rx="18" fill="#f5f5f7"/>
-  <text x="440" y="284" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">Standards / RFC text</text>
-  <text x="440" y="332" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">Mined test suites</text>
+  <!-- X axis: Queryability -->
+  <line x1="380" y1="922" x2="920" y2="922" stroke="#6e6e73" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="290" y="930" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle">Static</text>
+  <text x="1090" y="930" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#6e6e73" text-anchor="middle">Queryable on demand</text>
 
-  <!-- Top-right: Independent + Queryable (holy grail) -->
-  <rect x="720" y="120" width="520" height="360" rx="18" fill="#e9f6ef" stroke="#1a7f4e" stroke-width="3"/>
-  <text x="980" y="266" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">Off-thread review</text>
-  <text x="980" y="324" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="bold" fill="#136b41" text-anchor="middle">Live oracle</text>
-  <text x="980" y="362" font-family="Helvetica, Arial, sans-serif" font-size="22" font-style="italic" fill="#4d8a6c" text-anchor="middle">(the holy grail)</text>
+  <!-- Re-reading your own plan / notes: barely queryable, barely independent -->
+  <circle cx="273" cy="789" r="11" fill="#1d1d1f"/>
+  <text x="299" y="798" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#1d1d1f" text-anchor="start">Re-reading your own plan / notes</text>
 
-  <!-- Bottom-left: Self-graded + Static -->
-  <rect x="180" y="500" width="520" height="360" rx="18" fill="#f5f5f7"/>
-  <text x="440" y="690" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">Re-reading your own plan / notes</text>
+  <!-- In-thread self-review: fully queryable, zero independence -->
+  <circle cx="1053" cy="819" r="11" fill="#1d1d1f"/>
+  <text x="1053" y="783" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#1d1d1f" text-anchor="middle">In-thread self-review</text>
 
-  <!-- Bottom-right: Self-graded + Queryable -->
-  <rect x="720" y="500" width="520" height="360" rx="18" fill="#f5f5f7"/>
-  <text x="980" y="690" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1d1d1f" text-anchor="middle">In-thread self-review</text>
+  <!-- Standards / RFC text: independent authority, but interpretation leaks dependence back in -->
+  <circle cx="283" cy="363" r="11" fill="#1d1d1f"/>
+  <text x="309" y="372" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#1d1d1f" text-anchor="start">Standards / RFC text</text>
+
+  <!-- Mined test suites: executable answers, no interpretation step; coverage still frozen -->
+  <circle cx="512" cy="211" r="11" fill="#1d1d1f"/>
+  <text x="486" y="220" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#1d1d1f" text-anchor="end">Mined test suites</text>
+
+  <!-- Off-thread review: queryable, independent context but same kind — residual dependence -->
+  <circle cx="1011" cy="424" r="11" fill="#1d1d1f"/>
+  <text x="985" y="433" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#1d1d1f" text-anchor="end">Off-thread review</text>
+
+  <!-- Live oracle: fully independent, fully queryable -->
+  <circle cx="1178" cy="166" r="14" fill="#136b41"/>
+  <text x="1146" y="177" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="bold" fill="#136b41" text-anchor="end">Live oracle</text>
+  <text x="1146" y="209" font-family="Helvetica, Arial, sans-serif" font-size="22" font-style="italic" fill="#4d8a6c" text-anchor="end">(the holy grail)</text>
 </svg>
